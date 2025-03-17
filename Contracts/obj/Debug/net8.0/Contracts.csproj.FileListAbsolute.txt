@@ -1,0 +1,11 @@
+E:\ASP.NET\CompanyEmployees\Contracts\bin\Debug\net8.0\Contracts.deps.json
+E:\ASP.NET\CompanyEmployees\Contracts\bin\Debug\net8.0\Contracts.dll
+E:\ASP.NET\CompanyEmployees\Contracts\bin\Debug\net8.0\Contracts.pdb
+E:\ASP.NET\CompanyEmployees\Contracts\obj\Debug\net8.0\Contracts.GeneratedMSBuildEditorConfig.editorconfig
+E:\ASP.NET\CompanyEmployees\Contracts\obj\Debug\net8.0\Contracts.AssemblyInfoInputs.cache
+E:\ASP.NET\CompanyEmployees\Contracts\obj\Debug\net8.0\Contracts.AssemblyInfo.cs
+E:\ASP.NET\CompanyEmployees\Contracts\obj\Debug\net8.0\Contracts.csproj.CoreCompileInputs.cache
+E:\ASP.NET\CompanyEmployees\Contracts\obj\Debug\net8.0\Contracts.dll
+E:\ASP.NET\CompanyEmployees\Contracts\obj\Debug\net8.0\refint\Contracts.dll
+E:\ASP.NET\CompanyEmployees\Contracts\obj\Debug\net8.0\Contracts.pdb
+E:\ASP.NET\CompanyEmployees\Contracts\obj\Debug\net8.0\ref\Contracts.dll
