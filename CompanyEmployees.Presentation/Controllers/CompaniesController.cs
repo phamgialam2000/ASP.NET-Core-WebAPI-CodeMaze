@@ -37,6 +37,12 @@ namespace CompanyEmployees.Presentation.Controllers
             //xóa trycatch vì nếu có lỗi đã có ExceptionMiddlewareExtensions đăng kí ở Program  
 
         }
+        [HttpGet("{id:guid}")]
+        public IActionResult GetCompany(Guid id)
+        {
+            var company = _service.CompanyService.GetCompany(id, trackChanges: false);
+            return Ok(company);
+        }
     }
 }
 
