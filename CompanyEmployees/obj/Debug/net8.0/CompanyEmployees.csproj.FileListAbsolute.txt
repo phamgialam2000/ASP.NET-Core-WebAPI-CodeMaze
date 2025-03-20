@@ -149,8 +149,12 @@ E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Contracts.dll
 E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Entities.dll
 E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\LoggerService.dll
 E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Repository.dll
+E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Service.Contracts.dll
+E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Service.dll
 E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\LoggerService.pdb
 E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Repository.pdb
+E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Service.Contracts.pdb
+E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Service.pdb
 E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Contracts.pdb
 E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Entities.pdb
 E:\ASP.NET\CompanyEmployees\CompanyEmployees\obj\Debug\net8.0\CompanyEmployees.csproj.AssemblyReference.cache
@@ -173,3 +177,10 @@ E:\ASP.NET\CompanyEmployees\CompanyEmployees\obj\Debug\net8.0\refint\CompanyEmpl
 E:\ASP.NET\CompanyEmployees\CompanyEmployees\obj\Debug\net8.0\CompanyEmployees.pdb
 E:\ASP.NET\CompanyEmployees\CompanyEmployees\obj\Debug\net8.0\CompanyEmployees.genruntimeconfig.cache
 E:\ASP.NET\CompanyEmployees\CompanyEmployees\obj\Debug\net8.0\ref\CompanyEmployees.dll
+E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\CompanyEmployees.Presentation.dll
+E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\CompanyEmployees.Presentation.pdb
+E:\ASP.NET\CompanyEmployees\CompanyEmployees\obj\Debug\net8.0\CompanyEmployees.MvcApplicationPartsAssemblyInfo.cs
+E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Shared.dll
+E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\Shared.pdb
+E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\AutoMapper.dll
+E:\ASP.NET\CompanyEmployees\CompanyEmployees\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

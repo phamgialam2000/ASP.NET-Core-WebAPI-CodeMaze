@@ -13,3 +13,5 @@ E:\ASP.NET\CompanyEmployees\LoggerService\obj\Debug\net8.0\LoggerService.dll
 E:\ASP.NET\CompanyEmployees\LoggerService\obj\Debug\net8.0\refint\LoggerService.dll
 E:\ASP.NET\CompanyEmployees\LoggerService\obj\Debug\net8.0\LoggerService.pdb
 E:\ASP.NET\CompanyEmployees\LoggerService\obj\Debug\net8.0\ref\LoggerService.dll
+E:\ASP.NET\CompanyEmployees\LoggerService\bin\Debug\net8.0\Entities.dll
+E:\ASP.NET\CompanyEmployees\LoggerService\bin\Debug\net8.0\Entities.pdb
