@@ -2,13 +2,14 @@ using CompanyEmployees;
 using CompanyEmployees.Extensions;
 using Contracts;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 var builder = WebApplication.CreateBuilder(args);
 
 LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 // Add services to the container.
-
+builder.Services.AddSwaggerGen();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerService();
@@ -24,6 +25,10 @@ builder.Services.AddControllers(config => {
  .AddCustomCSVFormatter()
 .AddApplicationPart(typeof(CompanyEmployees.Presentation.AssemblyReference).Assembly);
 //builder.Services.AddControllers().AddApplicationPart(typeof(CompanyEmployees.Presentation.AssemblyReference).Assembly);
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 var app = builder.Build();
 
@@ -49,6 +54,8 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
+
+#region demo
 //app.Use(async (context, next) =>
 //{
 //    Console.WriteLine($"Logic before executing the next delegate in the Use method");
@@ -85,7 +92,12 @@ app.UseAuthorization();
 //    Console.WriteLine($"Writing the response to the client in the Run method");
 //    await context.Response.WriteAsync("Hello from the middleware component.");
 //});
-
+#endregion
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
+});
 
 app.MapControllers();
 

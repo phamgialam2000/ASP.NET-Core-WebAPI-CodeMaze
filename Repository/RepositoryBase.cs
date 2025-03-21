@@ -33,3 +33,12 @@ namespace Repository
         public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
     }
 }
+
+// When it’s set to false (trackChanges), we attach the AsNoTracking method to our query to inform EF Core that it
+// doesn’t need to track changes for the required entities. This greatly improves the speed of a query.
+
+//Expression<Func<T, bool>>
+// bool: Lọc dữ liệu (Where)
+// int: Truy xuất số (Select)
+// string: Truy xuất chuỗi (Select)
+// object: Ánh xạ đối tượng (Select → DTO) ✅ Dùng Expression<Func<T, TResult>> giúp LINQ dịch trực tiếp thành SQL tối ưu hơn
