@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service;
 using Service.Contracts;
+using Service.DataShaping;
+using Shared.DataTransferObjects;
 
 namespace CompanyEmployees.Extensions
 {
@@ -15,8 +17,10 @@ namespace CompanyEmployees.Extensions
                 options.AddPolicy("CorsPolicy", builder =>
                  builder.AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader());
-            });
+                .AllowAnyHeader()
+                .WithExposedHeaders("X-Pagination"));
+
+    });
 
         public static void ConfigureIISIntegration(this IServiceCollection services) =>
             services.Configure<IISOptions>(options =>
@@ -31,6 +35,10 @@ namespace CompanyEmployees.Extensions
         public static void ConfigureServiceManager(this IServiceCollection services) =>
             services.AddScoped<IServiceManager, ServiceManager>();
         
+        public static void ConfigureDataShaper(this IServiceCollection services) =>
+            services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
+
+
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(opts =>
             opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
