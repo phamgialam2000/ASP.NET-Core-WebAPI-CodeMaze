@@ -28,6 +28,10 @@ builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureDataShaper();
+builder.Services.ConfigureVersioning();
+builder.Services.ConfigureResponseCaching();
+builder.Services.ConfigureOutputCaching();
+
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -37,6 +41,10 @@ builder.Services.AddControllers(config => {
     config.RespectBrowserAcceptHeader = true;
     config.ReturnHttpNotAcceptable = true;
     config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+    config.CacheProfiles.Add("120SecondsDuration", new CacheProfile
+    {
+        Duration = 120
+    });
 
 }).AddXmlDataContractSerializerFormatters()
  .AddCustomCSVFormatter()
@@ -69,6 +77,8 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     ForwardedHeaders = ForwardedHeaders.All
 });
 app.UseCors("CorsPolicy");
+//app.UseResponseCaching();
+app.UseOutputCache();
 
 app.UseAuthorization();
 
