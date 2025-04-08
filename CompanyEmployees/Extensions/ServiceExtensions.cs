@@ -10,6 +10,12 @@ using Shared.DataTransferObjects;
 using static System.Net.WebRequestMethods;
 using System;
 using Microsoft.AspNetCore.Http;
+using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Identity;
+using Entities.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace CompanyEmployees.Extensions
 {
@@ -81,5 +87,90 @@ namespace CompanyEmployees.Extensions
         //Các phản hồi sẽ hết hạn(expire) sau 10 giây.
         //Nghĩa là: trong vòng 10 giây sau một phản hồi được gửi, mọi request trùng lặp sẽ được lấy từ cache(không chạy lại controller/action).
         #endregion
+
+        public static void ConfigureRateLimitingOptions(this IServiceCollection services)
+        {
+            services.AddRateLimiter(opt =>
+            {
+                opt.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context
+               =>
+                RateLimitPartition.GetFixedWindowLimiter("GlobalLimiter",
+                partition => new FixedWindowRateLimiterOptions
+                {
+                    AutoReplenishment = true,
+                    PermitLimit = 5,
+                    //QueueLimit = 0,
+                    QueueLimit = 2,
+                    QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                    Window = TimeSpan.FromMinutes(1)
+                    //gioi han 5 request trong 1 phut
+                    // neu QueueLimit = 0 thi se khong cho request vao queue va thong bao 429
+                    // QueueLimit = 2 thi se cho 2 request vao queue, cac req tiep se thong bao 429
+
+                }));
+                opt.RejectionStatusCode = 429; // TooManyRequests
+
+                opt.AddPolicy("SpecificPolicy", context =>
+                    RateLimitPartition.GetFixedWindowLimiter("SpecificLimiter",
+                    partition => new FixedWindowRateLimiterOptions
+                    {
+                        AutoReplenishment = true,
+                        PermitLimit = 3,
+                        Window = TimeSpan.FromSeconds(10)
+                    }));
+
+                opt.OnRejected = async (context, token) =>
+                {
+                    context.HttpContext.Response.StatusCode = 429;
+                    if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+                        await context.HttpContext.Response
+                        .WriteAsync($"Too many requests. Please try again after { retryAfter.TotalSeconds} (s).", token);
+                    else
+                        await context.HttpContext.Response
+                        .WriteAsync("Too many requests. Please try again later.", token);
+                };
+
+            });
+
+        }
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            var builder = services.AddIdentity<User, IdentityRole>(o =>
+            {
+                o.Password.RequireDigit = true;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 10;
+                o.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<RepositoryContext>()
+            .AddDefaultTokenProviders();
+        }
+        public static void ConfigureJWT(this IServiceCollection services, IConfiguration
+configuration)
+        {
+            var jwtSettings = configuration.GetSection("JwtSettings");
+            var secretKey = Environment.GetEnvironmentVariable("SECRET");
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["validIssuer"],
+                    ValidAudience = jwtSettings["validAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                };
+            });
+        }
+
     }
 }

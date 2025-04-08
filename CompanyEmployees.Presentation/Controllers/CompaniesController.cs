@@ -1,8 +1,10 @@
 ﻿using Asp.Versioning;
 using CompanyEmployees.Presentation.ActionFilters;
 using CompanyEmployees.Presentation.ModelBinders;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using Microsoft.AspNetCore.RateLimiting;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using System;
@@ -25,8 +27,10 @@ namespace CompanyEmployees.Presentation.Controllers
         {
             _service = service;
         }
-        [HttpGet]
-        public  async Task<IActionResult> GetCompanies()
+        [HttpGet(Name = "GetCompanies")]
+        [EnableRateLimiting("SpecificPolicy")]
+        [Authorize(Roles = "Manager")]
+        public async Task<IActionResult> GetCompanies()
         {
             #region testing exception
             //try
@@ -54,6 +58,7 @@ namespace CompanyEmployees.Presentation.Controllers
         //[OutputCache(NoStore = true)] if you want to disable caching
         //[ResponseCache(Duration = 60)]
         [OutputCache(Duration = 60)]
+        [DisableRateLimiting]
         public async Task<IActionResult> GetCompany(Guid id)
         {
             var company = await _service.CompanyService.GetCompanyAsync(id, trackChanges: false);
