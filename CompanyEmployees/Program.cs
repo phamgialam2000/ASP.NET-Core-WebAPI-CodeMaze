@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using CompanyEmployees.Presentation.ActionFilters;
 using Service.DataShaping;
 using Shared.DataTransferObjects;
+using Entities.ConfigurationModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,11 +39,12 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddScoped<ValidationFilterAttribute>();
 
+
 //identity
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
-
+builder.Services.AddJwtConfiguration(builder.Configuration);
 
 builder.Services.AddControllers(config => {
     config.RespectBrowserAcceptHeader = true;

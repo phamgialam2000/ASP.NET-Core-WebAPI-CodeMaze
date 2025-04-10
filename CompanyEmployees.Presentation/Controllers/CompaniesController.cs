@@ -29,7 +29,7 @@ namespace CompanyEmployees.Presentation.Controllers
         }
         [HttpGet(Name = "GetCompanies")]
         [EnableRateLimiting("SpecificPolicy")]
-        [Authorize(Roles = "Manager")]
+        //[Authorize(Roles = "Manager")]
         public async Task<IActionResult> GetCompanies()
         {
             #region testing exception

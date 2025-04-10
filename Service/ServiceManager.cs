@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.ConfigurationModels;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 using System;
@@ -22,7 +24,7 @@ namespace Service
 
         public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger,
         IMapper mapper, IDataShaper<EmployeeDto> dataShaper, UserManager<User> userManager,
-        IConfiguration configuration)
+        IOptions<JwtConfiguration> configuration)
 
 
         {
